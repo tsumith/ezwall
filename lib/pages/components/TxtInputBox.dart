@@ -14,12 +14,12 @@ class TextBox extends StatelessWidget {
           hintText: label,
           border: InputBorder.none,
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.black, width: 2),
+            borderSide: BorderSide(color: Colors.black, width: 1),
             borderRadius: BorderRadius.circular(20),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.black, width: 2),
+            borderSide: BorderSide(color: Colors.black, width: 1),
           )),
     );
   }
