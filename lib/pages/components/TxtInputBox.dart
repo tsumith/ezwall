@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TextBox extends StatefulWidget {
   String label;
   bool obstxt;
-  TextEditingController controller;
+  late TextEditingController controller;
   TextBox({required this.label, this.obstxt = false, required this.controller});
 
   @override
