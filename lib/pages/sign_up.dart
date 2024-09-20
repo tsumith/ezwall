@@ -8,17 +8,49 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  static const double padding = 15;
+  static const double padding = 30;
   TextEditingController _emailId = TextEditingController();
   TextEditingController _password = TextEditingController();
+  TextEditingController _username = TextEditingController();
   Future _signUp() async {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    image: DecorationImage(
+                        image: AssetImage("assets/cash.png"),
+                        fit: BoxFit.fill)),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Sign Up if you haven't already",
+                  style: TextStyle(
+                      fontSize: 25, color: Color.fromARGB(255, 119, 119, 119)),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: padding),
+                child: TextBox(
+                  label: "Username",
+                  controller: _username,
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: padding),
                 child: TextBox(
@@ -36,16 +68,20 @@ class _SignUpState extends State<SignUp> {
                   controller: _password,
                 ),
               ),
+              SizedBox(
+                height: 20,
+              ),
+
               // ignore: prefer_const_constructors,
               Padding(
-                padding: const EdgeInsets.all(padding),
+                padding: const EdgeInsets.symmetric(horizontal: padding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
                       onPressed: _signUp,
                       child: Text(
-                        "Sign Up",
+                        "Continue",
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -55,9 +91,11 @@ class _SignUpState extends State<SignUp> {
                           enableFeedback: true),
                     ),
                     ElevatedButton(
-                      onPressed: _signUp,
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/SignInPage');
+                      },
                       child: Text(
-                        "Sign In",
+                        "    Login    ",
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -68,7 +106,10 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(
+                height: 200,
+              ),
             ],
           ),
         ),

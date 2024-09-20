@@ -6,10 +6,10 @@ import 'package:zzzwall/pages/sign_up.dart';
 void main() {
   runApp(MaterialApp(
     routes: {
-      '/': (context) => SignUp(),
+      '/SignUpPage': (context) => SignUp(),
       '/SignInPage': (context) => SignIn(),
       '/HomePage': (context) => HomePage(),
     },
-    initialRoute: '/',
+    initialRoute: '/SignInPage',
   ));
 }
