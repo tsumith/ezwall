@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'components/TxtInputBox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignIn extends StatefulWidget {

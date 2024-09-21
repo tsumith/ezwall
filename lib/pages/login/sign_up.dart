@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
-import 'components/TxtInputBox.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
@@ -79,9 +79,24 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: padding),
-                  child: TextBox(
-                    label: "Username",
+                  child: TextField(
                     controller: _username,
+                    decoration: InputDecoration(
+                        // ignore: prefer_const_constructors
+                        hintStyle: TextStyle(
+                            color: Color.fromARGB(255, 119, 119, 119)),
+                        hintText: "Username",
+                        border: InputBorder.none,
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: const Color.fromARGB(255, 185, 106, 106),
+                              width: 1),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: BorderSide(color: Colors.black, width: 1),
+                        )),
                   ),
                 ),
                 SizedBox(
