@@ -2,6 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:zzzwall/pages/components/Walletcard.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -59,24 +61,51 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.all(40),
               child: WhiteText(
+                size: 20,
                 data: "Add your wallet",
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Card(
-                  elevation: 10,
-                  shadowColor: Colors.white,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 20,
-                        ),
-                        child: Text("data"),
-                      ),
-                    ],
-                  )),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  Container(
+                    width: screenWidth,
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Card(
+                        elevation: 10,
+                        shadowColor: Colors.white,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: screenWidth / 7,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text("Add your wallet"),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  IconButton(
+                                      highlightColor: const Color.fromARGB(
+                                          255, 114, 151, 180),
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.add,
+                                      ))
+                                ],
+                              ),
+                            ),
+                          ],
+                        )),
+                  ),
+                  Walletcard(
+                    screenWidth: screenWidth,
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -93,6 +122,7 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+// ignore: must_be_immutable
 class WhiteText extends StatelessWidget {
   String data;
   double? size;

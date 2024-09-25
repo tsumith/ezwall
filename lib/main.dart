@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zzzwall/pages/home.dart';
 import 'package:zzzwall/pages/login/sign_in.dart';
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   runApp(MaterialApp(
     routes: {
       '/SignUpPage': (context) => SignUp(),

@@ -62,7 +62,7 @@ class _SignUpState extends State<SignUp> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       image: DecorationImage(
-                          image: AssetImage("assets/emoji1.jpg"),
+                          image: AssetImage("assets/signuplogo.png"),
                           fit: BoxFit.fill)),
                 ),
                 Padding(
