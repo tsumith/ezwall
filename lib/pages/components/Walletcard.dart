@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Walletcard extends StatelessWidget {
+// ignore: must_be_immutable
+class Walletcard extends StatefulWidget {
   double? screenWidth;
   Walletcard({this.screenWidth});
+
+  @override
+  State<Walletcard> createState() => _WalletcardState();
+}
+
+class _WalletcardState extends State<Walletcard> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: screenWidth,
+      width: widget.screenWidth,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Card(
           color: Colors.blue,
@@ -16,7 +23,7 @@ class Walletcard extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: screenWidth! / 7,
+                  vertical: widget.screenWidth! / 7,
                 ),
                 child: Text("data"),
               ),

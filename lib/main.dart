@@ -12,12 +12,32 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
-  runApp(MaterialApp(
-    routes: {
-      '/SignUpPage': (context) => SignUp(),
-      '/SignInPage': (context) => SignIn(),
-      '/HomePage': (context) => HomePage(),
-    },
-    initialRoute: '/SignInPage',
-  ));
+  runApp(MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  User? user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = FirebaseAuth.instance.currentUser;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      routes: {
+        '/SignUpPage': (context) => SignUp(),
+        '/SignInPage': (context) => SignIn(),
+        '/HomePage': (context) => HomePage(),
+      },
+      initialRoute: user != null ? '/HomePage' : '/SignInPage',
+    );
+  }
 }

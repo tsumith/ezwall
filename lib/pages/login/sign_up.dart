@@ -82,6 +82,7 @@ class _SignUpState extends State<SignUp> {
                   child: TextField(
                     controller: _username,
                     decoration: InputDecoration(
+                        // ignore: duplicate_ignore
                         // ignore: prefer_const_constructors
                         hintStyle: TextStyle(
                             color: Color.fromARGB(255, 119, 119, 119)),
@@ -152,6 +153,7 @@ class _SignUpState extends State<SignUp> {
                   height: 20,
                 ),
 
+                // ignore: duplicate_ignore
                 // ignore: prefer_const_constructors,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: padding),
