@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -59,8 +60,7 @@ class _SignInState extends State<SignIn> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                          image: AssetImage("assets/cash.png"),
-                          fit: BoxFit.fill)),
+                          image: AssetImage("/cash.jpg"), fit: BoxFit.fill)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
