@@ -4,8 +4,14 @@ class Button1 extends StatelessWidget {
   void Function() onpressed;
   String text;
   Color color;
+  Color fontcolor;
+  Color shadowcolor;
   Button1(
-      {required this.onpressed, required this.text, this.color = Colors.brown});
+      {required this.onpressed,
+      required this.text,
+      this.color = Colors.brown,
+      this.fontcolor = Colors.white,
+      this.shadowcolor = Colors.black});
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,7 +29,7 @@ class Button1 extends StatelessWidget {
           text,
           style: TextStyle(
             fontSize: 15,
-            color: Colors.white,
+            color: fontcolor,
           ),
         ),
       ),

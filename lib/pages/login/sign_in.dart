@@ -60,7 +60,8 @@ class _SignInState extends State<SignIn> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       image: DecorationImage(
-                          image: AssetImage("/cash.jpg"), fit: BoxFit.fill)),
+                          image: AssetImage("assets/cash.jpg"),
+                          fit: BoxFit.fill)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
