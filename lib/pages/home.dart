@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Button1(
                   onpressed: () {},
-                  text: "Add amount",
+                  text: "Add",
                   color: const Color.fromARGB(255, 11, 65, 109),
                 ),
                 SizedBox(

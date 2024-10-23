@@ -22,7 +22,22 @@ class _SignUpState extends State<SignUp> {
         Navigator.pushNamed(context, '/SignInPage');
       });
     } catch (e) {
-      Navigator.pushNamed(context, '/SignUpPage');
+      // Navigator.pushNamed(context, '/SignUpPage');
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("SignUp failed"),
+              content: Text("An error has been occured, please try again"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("close"))
+              ],
+            );
+          });
     }
   }
 
@@ -158,7 +173,7 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: padding),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       ElevatedButton(
                         onPressed: _signUp,
@@ -172,20 +187,21 @@ class _SignUpState extends State<SignUp> {
                             elevation: 5,
                             enableFeedback: true),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/SignInPage');
-                        },
-                        child: Text(
-                          "    Login    ",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                            fixedSize: Size.fromHeight(40),
-                            surfaceTintColor: Colors.red,
-                            elevation: 5,
-                            enableFeedback: true),
-                      ),
+                      // Text("already have a account ? then"),
+                      // ElevatedButton(
+                      //   onPressed: () {
+                      //     Navigator.pushNamed(context, '/SignInPage');
+                      //   },
+                      //   child: Text(
+                      //     "    Login    ",
+                      //     style: TextStyle(color: Colors.black),
+                      //   ),
+                      //   style: ElevatedButton.styleFrom(
+                      //       fixedSize: Size.fromHeight(40),
+                      //       surfaceTintColor: Colors.red,
+                      //       elevation: 5,
+                      //       enableFeedback: true),
+                      // ),
                     ],
                   ),
                 ),
