@@ -20,7 +20,21 @@ class _SignInState extends State<SignIn> {
         Navigator.pushNamed(context, "/HomePage");
       });
     } catch (e) {
-      Navigator.pushNamed(context, "/SignUpPage");
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("SignIn failed"),
+              content: Text("An error has been occured, please try again"),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("close"))
+              ],
+            );
+          });
     }
   }
 

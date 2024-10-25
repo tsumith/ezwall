@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:zzzwall/pages/Nav/Activity.dart';
+import 'package:zzzwall/pages/Nav/Profile.dart';
+import 'package:zzzwall/pages/Nav/Recent.dart';
 import 'package:zzzwall/pages/home.dart';
 import 'package:zzzwall/pages/login/sign_in.dart';
 import 'package:zzzwall/pages/login/sign_up.dart';
@@ -39,6 +42,9 @@ class _MyAppState extends State<MyApp> {
         '/SignUpPage': (context) => SignUp(),
         '/SignInPage': (context) => SignIn(),
         '/HomePage': (context) => HomePage(),
+        'ProfilePage': (context) => ProfilePage(),
+        'ActivityPage': (context) => ActivityPage(),
+        'RecentPage': (context) => RecentPage()
       },
       initialRoute: user != null ? '/HomePage' : '/SignInPage',
     );
