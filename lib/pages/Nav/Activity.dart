@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:zzzwall/pages/Nav/Root.dart';
+import 'package:zzzwall/pages/components/GreyBlackBackground.dart';
 
-class ActivityPage extends StatelessWidget {
+class ActivityPage extends StatefulWidget {
+  @override
+  State<ActivityPage> createState() => _ActivityPageState();
+}
+
+class _ActivityPageState extends State<ActivityPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Center(
-      child: Text("ActivityPage"),
+        child: Stack(
+      children: [
+        BlackGreyGradBackground(),
+        Center(
+          child: WhiteText(data: "your activities"),
+        )
+      ],
     ));
   }
 }

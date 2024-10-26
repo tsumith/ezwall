@@ -4,10 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:zzzwall/pages/Nav/Activity.dart';
+import 'package:zzzwall/pages/Nav/Profile.dart';
+import 'package:zzzwall/pages/Nav/Recent.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
-import 'package:zzzwall/pages/components/Button1.dart';
 import 'package:zzzwall/pages/components/HomeDrawer.dart';
-import 'package:zzzwall/pages/components/Walletcard.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,6 +16,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentIndex = 0;
+  List<Widget> pages = [
+    RootPage(),
+    RecentPage(),
+    ActivityPage(),
+    ProfilePage()
+  ];
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut().then((value) {
       Navigator.pushNamed(context, '/SignInPage');
@@ -23,30 +31,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    int count = 0;
-    List<String> Pages = [
-      "HomePage",
-      "RecentPage",
-      "ActivityPage",
-      "ProfilePage"
-    ];
-
     return Scaffold(
       bottomNavigationBar: GNav(
         gap: 8,
         backgroundColor: Color.fromARGB(255, 37, 37, 37),
-        rippleColor: const Color.fromARGB(255, 4, 42, 73),
+        rippleColor: Color.fromARGB(255, 4, 42, 73),
         activeColor: Colors.blue,
         tabBackgroundColor: Color.fromARGB(255, 43, 53, 56),
         tabBorderRadius: 40,
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         haptic: true,
+        selectedIndex: _currentIndex,
         onTabChange: (value) {
-          if (value == 0) {
-            count++;
-          } else {
-            Navigator.pushNamed(context, Pages[value]);
-          }
+          setState(() {
+            _currentIndex = value;
+          });
         },
         tabs: [
           GButton(
@@ -84,8 +83,7 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      backgroundColor: Colors.black,
-      body: RootPage(),
+      body: pages[_currentIndex],
       //drawer
       drawer: Homedrawer(),
     );

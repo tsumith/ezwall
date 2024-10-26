@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:zzzwall/pages/Nav/Activity.dart';
 import 'package:zzzwall/pages/Nav/Profile.dart';
 import 'package:zzzwall/pages/Nav/Recent.dart';
+import 'package:zzzwall/pages/Nav/Root.dart';
 import 'package:zzzwall/pages/home.dart';
 import 'package:zzzwall/pages/login/sign_in.dart';
 import 'package:zzzwall/pages/login/sign_up.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:zzzwall/pages/transactions/Add.dart';
+import 'package:zzzwall/pages/transactions/Send.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -35,8 +38,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme:
-          ThemeData(bottomAppBarTheme: BottomAppBarTheme(color: Colors.black)),
+      theme: ThemeData(
+        bottomAppBarTheme: BottomAppBarTheme(color: Colors.black),
+      ),
       debugShowCheckedModeBanner: false,
       routes: {
         '/SignUpPage': (context) => SignUp(),
@@ -44,7 +48,10 @@ class _MyAppState extends State<MyApp> {
         '/HomePage': (context) => HomePage(),
         'ProfilePage': (context) => ProfilePage(),
         'ActivityPage': (context) => ActivityPage(),
-        'RecentPage': (context) => RecentPage()
+        'RecentPage': (context) => RecentPage(),
+        'AddPage': (context) => AddPage(),
+        'RootPage': (context) => RootPage(),
+        'SpendPage': (context) => SendPage()
       },
       initialRoute: user != null ? '/HomePage' : '/SignInPage',
     );

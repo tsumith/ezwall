@@ -1,84 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:zzzwall/pages/components/Button1.dart';
+import 'package:zzzwall/pages/components/GreyBlackBackground.dart';
 import 'package:zzzwall/pages/components/Walletcard.dart';
 
-class RootPage extends StatelessWidget {
+class RootPage extends StatefulWidget {
+  @override
+  State<RootPage> createState() => _RootPageState();
+}
+
+class _RootPageState extends State<RootPage> {
   @override
   Widget build(BuildContext context) {
-    int balance = 0;
     double screenWidth = MediaQuery.of(context).size.width;
     double sidePadding = 15;
-    // TODO: implement build
-    return Stack(children: [
-      Align(
-        child: FractionallySizedBox(
-          heightFactor: 1,
-          widthFactor: 1,
-          child: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                  Colors.black,
-                  const Color.fromARGB(255, 37, 37, 37)
-                ])),
-          ),
-        ),
-      ),
-      ListView(
-        padding: EdgeInsets.symmetric(horizontal: sidePadding),
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: EdgeInsets.all(sidePadding),
-            child: WhiteText(
-              size: 20,
-              data: "Your Wallet",
+    return Container(
+      child: Stack(children: [
+        BlackGreyGradBackground(),
+        ListView(
+          padding: EdgeInsets.symmetric(horizontal: sidePadding),
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          Walletcard(
-            screenWidth: screenWidth,
-            balance: balance,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Button1(
-                onpressed: () {},
-                text: "Add",
-                color: const Color.fromARGB(255, 11, 65, 109),
+            Padding(
+              padding: EdgeInsets.all(sidePadding),
+              child: WhiteText(
+                size: 20,
+                data: "Your Wallet",
               ),
-              SizedBox(
-                width: 15,
-              ),
-              Button1(
-                onpressed: () {},
-                text: "Send",
-                color: const Color.fromARGB(255, 27, 119, 5),
-              ),
-              SizedBox(
-                width: 15,
-              ),
-              Button1(
-                onpressed: () {},
-                text: "Transfer",
-                shadowcolor: Colors.white,
-                color: const Color.fromARGB(255, 196, 85, 51),
-              ),
-            ],
-          ),
-        ],
-      ),
-    ]);
+            ),
+            Walletcard(
+              screenWidth: screenWidth,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Button1(
+                  onpressed: () {
+                    Navigator.pushNamed(context, 'AddPage');
+                  },
+                  text: "Add",
+                  color: const Color.fromARGB(255, 11, 65, 109),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Button1(
+                  onpressed: () {
+                    Navigator.pushNamed(context, 'SpendPage');
+                  },
+                  text: "Send",
+                  color: const Color.fromARGB(255, 27, 119, 5),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Button1(
+                  onpressed: () {},
+                  text: "Transfer",
+                  shadowcolor: Colors.white,
+                  color: const Color.fromARGB(255, 196, 85, 51),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ]),
+    );
   }
 }
 
+// ignore: must_be_immutable
 class WhiteText extends StatelessWidget {
   String data;
   double? size;
