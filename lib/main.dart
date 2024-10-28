@@ -11,6 +11,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:zzzwall/pages/transactions/Add.dart';
 import 'package:zzzwall/pages/transactions/Send.dart';
 import 'firebase_options.dart';
+import 'package:sqflite/sqflite.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
