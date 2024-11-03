@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
-import 'package:zzzwall/pages/transactions/Manager.dart';
 
 class SendPage extends StatefulWidget {
   @override
@@ -9,7 +8,7 @@ class SendPage extends StatefulWidget {
 
 class _SendPageState extends State<SendPage> {
   int amount = 0;
-  TextEditingController sendController = new TextEditingController();
+  TextEditingController sendController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,6 @@ class _SendPageState extends State<SendPage> {
               onPressed: () {
                 setState(() {
                   amount = int.parse(sendController.text);
-                  Manager.spendAmount(amount);
                 });
               },
               child: WhiteText(data: "send from wallet"),

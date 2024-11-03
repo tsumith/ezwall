@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, sort_child_properties_last
 
 import 'package:flutter/material.dart';
-import 'package:zzzwall/pages/transactions/Manager.dart';
+import 'package:zzzwall/database/LocalDatabase.dart';
 
 // ignore: must_be_immutable
 class Walletcard extends StatefulWidget {
@@ -13,15 +13,33 @@ class Walletcard extends StatefulWidget {
 }
 
 class _WalletcardState extends State<Walletcard> {
-  int balance = Manager.getAmount();
+  DbHelper? db;
+  int balance = 0;
+  @override
+  void initState() {
+    super.initState();
+    db = DbHelper.getInstance;
+    giveAmount();
+  }
+
+  Future<int> giveAmount() async {
+    int res = await db!.gettotalAmount();
+    setState(() {
+      balance = res;
+    });
+
+    return res;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: widget.screenWidth,
-      child: Card(
-        color: Colors.blue,
-        elevation: 10,
-        shadowColor: const Color.fromARGB(255, 104, 160, 155),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            gradient: LinearGradient(
+                colors: [const Color.fromARGB(255, 6, 46, 80), Colors.blue])),
         child: Padding(
           child: Container(
             child: Column(

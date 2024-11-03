@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Activity.dart';
 import 'package:zzzwall/pages/Nav/Profile.dart';
 import 'package:zzzwall/pages/Nav/Recent.dart';
@@ -16,6 +17,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DbHelper? mydb;
   int _currentIndex = 0;
   List<Widget> pages = [
     RootPage(),
@@ -30,9 +32,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    mydb = DbHelper.getInstance;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: GNav(
+        duration: Duration(milliseconds: 370),
         gap: 8,
         backgroundColor: Color.fromARGB(255, 37, 37, 37),
         rippleColor: Color.fromARGB(255, 4, 42, 73),

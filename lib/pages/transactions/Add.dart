@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
-import 'package:zzzwall/pages/Nav/Recent.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
-import 'package:zzzwall/pages/transactions/Manager.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -10,14 +8,13 @@ class AddPage extends StatefulWidget {
 }
 
 class _AddPageState extends State<AddPage> {
-  Localdb? db;
-  int amount = 0;
-  final TextEditingController _addController = new TextEditingController();
-  final TextEditingController _desController = new TextEditingController();
-  void updateData() async {
-    db = Localdb.getInstance;
-    var data = await db!.getData();
-    setState(() {});
+  TextEditingController _addController = TextEditingController();
+  TextEditingController _desController = TextEditingController();
+  DbHelper? mydb;
+  @override
+  void initState() {
+    super.initState();
+    mydb = DbHelper.getInstance;
   }
 
   @override
@@ -77,19 +74,14 @@ class _AddPageState extends State<AddPage> {
             ),
             ElevatedButton(
               onPressed: () async {
-                var money = int.parse(_addController.text);
-                var tranType = "deposited";
-                if (tranType.isNotEmpty && money != 0) {
-                  bool check =
-                      await db!.addData(amount: money, transaction: tranType);
-                  if (check) {
-                    updateData();
-                  }
+                bool check = await mydb!.addData(
+                    amount: int.parse(_addController.text),
+                    description: _desController.text,
+                    transacn: "Deposited");
+                if (check) {
+                  setState(() {});
+                  Navigator.pop(context, 'Updated data');
                 }
-                setState(() {
-                  amount = int.parse(_addController.text);
-                  Manager.addAmount(amount);
-                });
               },
               child: WhiteText(data: "Add to Wallet"),
               style: ButtonStyle(

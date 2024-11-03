@@ -4,54 +4,63 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
-class Localdb {
-  Localdb._(); //creating a private constructor for single object use
-  static final Localdb getInstance =
-      Localdb._(); //method for accessing the single object
-  //checking if the db is already opened or not
+class DbHelper {
   Database? db;
+  DbHelper._(); //creating a private constructor for single object use
+  static final DbHelper getInstance =
+      DbHelper._(); //method for accessing the single object
+  //checking if the db is already opened or not
+
   Future<Database> getDb() async {
-    if (db == null) {
+    if (db != null) {
       return db!;
     } else {
-      db = await openDb();
+      db = await createDb();
       return db!;
     }
   }
 
-  static final String clmSNo = "SNo";
-  static final String tableName = "wallet";
-  static final String clmAmount = "amount";
-  static final String clmTransaction = "Transaction";
-  static final String clmDescription = "description";
+  static String clmSNo = "SNo";
+  static String table_name = "wallet";
+  static String clmAmount = "amount";
+  static String clm_transaction = "trans";
+  static String clmDescription = "desc";
 
-  Future<Database> openDb() async {
+  Future<Database> createDb() async {
     Directory appDir =
         await getApplicationDocumentsDirectory(); //getting the path of the application doc dir
     String dbPath = join(appDir.path,
-        "wallet.db"); //finding the path to store in local mobile storage
-    return await openDatabase(dbPath, onCreate: (database, version) {
+        "zzzwall.db"); //finding the path to store in local mobile storage
+    return await openDatabase(dbPath, version: 1,
+        onCreate: (database, version) {
       database.execute(
-          "create table $tableName ($clmSNo INTEGER PRIMARY KEY AUTOINCREMENT,$clmAmount INT,$clmDescription TEXT,$clmTransaction Text)");
-    }, version: 1);
+          "create table $table_name ($clmSNo integer primary key autoincrement,$clmAmount integer,$clmDescription text,$clm_transaction text)");
+    });
   }
 
   //adding data to db
   Future<bool> addData(
       {required int amount,
-      String? description,
-      required String transaction}) async {
-    var currentDb = await getDb(); //getting the current database
-    int rowsEffected = await currentDb.insert(tableName, {
+      required String description,
+      required String transacn}) async {
+    final mydb = await getDb(); //getting the current database
+    int rowsEffected = await mydb.insert(table_name, {
       clmAmount: amount,
       clmDescription: description,
-      clmTransaction: transaction
+      clm_transaction: transacn
     });
     return rowsEffected > 0; //checking if data is inserted or not
   }
 
   Future<List<Map<String, dynamic>>> getData() async {
-    Database currentdb = await getDb();
-    return currentdb.query(tableName); //accessing the data from database
+    final mydb = await getDb();
+    return mydb.query(table_name);
+  }
+
+  Future<int> gettotalAmount() async {
+    final mydb = await getDb();
+    List<Map> result = await mydb
+        .rawQuery('select sum($clmAmount) as total_amount from $table_name');
+    return result.first['total_amount'];
   }
 }

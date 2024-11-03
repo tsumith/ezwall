@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/components/Button1.dart';
 import 'package:zzzwall/pages/components/GreyBlackBackground.dart';
 import 'package:zzzwall/pages/components/Walletcard.dart';
@@ -9,6 +10,20 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  DbHelper? db;
+  List<Map<String, dynamic>> data = [];
+  @override
+  void initState() {
+    super.initState();
+    db = DbHelper.getInstance;
+    fetchData();
+  }
+
+  void fetchData() async {
+    data = await db!.getData();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -66,6 +81,80 @@ class _RootPageState extends State<RootPage> {
                 ),
               ],
             ),
+            SizedBox(
+              height: 30,
+            ),
+            WhiteText(data: "  recent activities"),
+            SizedBox(
+              height: 20,
+            ),
+            Stack(children: [
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: [
+                      const Color.fromARGB(255, 10, 75, 133),
+                      const Color.fromARGB(255, 13, 70, 119),
+                      Colors.blue
+                    ]),
+                    borderRadius: BorderRadius.circular(20)),
+                height: 308,
+              ),
+              Column(
+                children: [
+                  Container(
+                    child: Center(child: WhiteText(data: "Transactions")),
+                    height: 50,
+                  ),
+                  Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: const Color.fromARGB(255, 116, 112, 112),
+                                spreadRadius: 2,
+                                blurRadius: 7)
+                          ],
+                          borderRadius: BorderRadius.circular(19),
+                          color: const Color.fromARGB(255, 240, 233, 228)),
+                      height: 250,
+                      child: data.isEmpty
+                          ? Center(child: Text("no transations"))
+                          : ListView.builder(
+                              itemCount: data.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  leading: Text(
+                                    "${data[index][DbHelper.clmSNo]}",
+                                  ),
+                                  title: Text(
+                                    "₹ ${data[index][DbHelper.clmAmount]}",
+                                    style: TextStyle(
+                                        color: Color.fromARGB(255, 9, 184, 15)),
+                                  ),
+                                  subtitle: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        data[index][DbHelper.clm_transaction],
+                                        style: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 94, 92, 92)),
+                                      ),
+                                      Text(
+                                        data[index][DbHelper.clmDescription],
+                                        style: TextStyle(
+                                            color: const Color.fromARGB(
+                                                255, 74, 155, 155)),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              })),
+                ],
+              )
+            ])
           ],
         ),
       ]),
