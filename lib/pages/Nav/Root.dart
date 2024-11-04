@@ -55,7 +55,9 @@ class _RootPageState extends State<RootPage> {
               children: [
                 Button1(
                   onpressed: () {
-                    Navigator.pushNamed(context, 'AddPage');
+                    Navigator.pushNamed(context, 'AddPage').then((value) {
+                      fetchData();
+                    });
                   },
                   text: "Add",
                   color: const Color.fromARGB(255, 11, 65, 109),
@@ -65,9 +67,11 @@ class _RootPageState extends State<RootPage> {
                 ),
                 Button1(
                   onpressed: () {
-                    Navigator.pushNamed(context, 'SpendPage');
+                    Navigator.pushNamed(context, 'SpendPage').then((value) {
+                      fetchData();
+                    });
                   },
-                  text: "Send",
+                  text: "Spend",
                   color: const Color.fromARGB(255, 27, 119, 5),
                 ),
                 SizedBox(
@@ -130,7 +134,11 @@ class _RootPageState extends State<RootPage> {
                                   title: Text(
                                     "₹ ${data[index][DbHelper.clmAmount]}",
                                     style: TextStyle(
-                                        color: Color.fromARGB(255, 9, 184, 15)),
+                                        color: data[index][
+                                                    DbHelper.clm_transaction] ==
+                                                "Deposit"
+                                            ? Color.fromARGB(255, 9, 184, 15)
+                                            : Colors.red),
                                   ),
                                   subtitle: Row(
                                     mainAxisAlignment:

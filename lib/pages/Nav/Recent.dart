@@ -40,7 +40,10 @@ class _RecentPageState extends State<RecentPage> {
                       title: Text(
                         "₹ ${data[index][DbHelper.clmAmount]}",
                         style: TextStyle(
-                            color: const Color.fromARGB(255, 91, 211, 95)),
+                            color: data[index][DbHelper.clm_transaction] ==
+                                    "Deposit"
+                                ? const Color.fromARGB(255, 91, 211, 95)
+                                : Colors.red),
                       ),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

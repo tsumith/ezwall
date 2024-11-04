@@ -25,6 +25,7 @@ class DbHelper {
   static String clmAmount = "amount";
   static String clm_transaction = "trans";
   static String clmDescription = "desc";
+  static String clmTotalAmount = "total";
 
   Future<Database> createDb() async {
     Directory appDir =
@@ -34,7 +35,7 @@ class DbHelper {
     return await openDatabase(dbPath, version: 1,
         onCreate: (database, version) {
       database.execute(
-          "create table $table_name ($clmSNo integer primary key autoincrement,$clmAmount integer,$clmDescription text,$clm_transaction text)");
+          "create table $table_name ($clmSNo integer primary key autoincrement,$clmAmount integer,$clmDescription text,$clm_transaction text,$clmTotalAmount integer)");
     });
   }
 
@@ -44,10 +45,20 @@ class DbHelper {
       required String description,
       required String transacn}) async {
     final mydb = await getDb(); //getting the current database
+    int currentTotal = await gettotalAmount();
+    int newTotal = currentTotal;
+    if (transacn == "Deposit") {
+      newTotal = currentTotal + amount;
+    } else if (transacn == "Spend") {
+      newTotal = currentTotal - amount;
+    } else {
+      print("not working");
+    }
     int rowsEffected = await mydb.insert(table_name, {
       clmAmount: amount,
       clmDescription: description,
-      clm_transaction: transacn
+      clm_transaction: transacn,
+      clmTotalAmount: newTotal
     });
     return rowsEffected > 0; //checking if data is inserted or not
   }
@@ -59,8 +70,14 @@ class DbHelper {
 
   Future<int> gettotalAmount() async {
     final mydb = await getDb();
-    List<Map> result = await mydb
-        .rawQuery('select sum($clmAmount) as total_amount from $table_name');
-    return result.first['total_amount'];
+    List<Map<String, dynamic>> result = await mydb.rawQuery(
+        'select coalesce(sum($clmAmount),0) as total_amount from $table_name where $clm_transaction = ?',
+        ["Deposit"]);
+    int depositSum = result[0]['total_amount'].toInt() ?? 0;
+    result = await mydb.rawQuery(
+        'select coalesce(sum($clmAmount),0) as total_amount from $table_name where $clm_transaction =?',
+        ["Spend"]);
+    int spendSum = result[0]['total_amount'].toInt() ?? 0;
+    return depositSum - spendSum;
   }
 }

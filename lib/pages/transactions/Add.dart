@@ -77,7 +77,7 @@ class _AddPageState extends State<AddPage> {
                 bool check = await mydb!.addData(
                     amount: int.parse(_addController.text),
                     description: _desController.text,
-                    transacn: "Deposited");
+                    transacn: "Deposit");
                 if (check) {
                   setState(() {});
                   Navigator.pop(context, 'Updated data');

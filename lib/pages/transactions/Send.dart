@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
 
 class SendPage extends StatefulWidget {
@@ -7,8 +8,15 @@ class SendPage extends StatefulWidget {
 }
 
 class _SendPageState extends State<SendPage> {
+  DbHelper? db;
   int amount = 0;
-  TextEditingController sendController = TextEditingController();
+  TextEditingController _sendController = TextEditingController();
+  TextEditingController _desController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    db = DbHelper.getInstance;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +49,7 @@ class _SendPageState extends State<SendPage> {
               height: 40,
             ),
             TextField(
-              controller: sendController,
+              controller: _sendController,
               style: TextStyle(color: Colors.white),
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
@@ -55,7 +63,7 @@ class _SendPageState extends State<SendPage> {
             ),
             TextField(
               style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.number,
+              controller: _desController,
               decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
@@ -66,10 +74,15 @@ class _SendPageState extends State<SendPage> {
               height: 25,
             ),
             ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  amount = int.parse(sendController.text);
-                });
+              onPressed: () async {
+                bool check = await db!.addData(
+                    amount: int.parse(_sendController.text),
+                    description: _desController.text,
+                    transacn: "Spend");
+                if (check) {
+                  setState(() {});
+                  Navigator.pop(context, "popped");
+                }
               },
               child: WhiteText(data: "send from wallet"),
               style: ButtonStyle(

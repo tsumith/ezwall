@@ -61,7 +61,9 @@ class _WalletcardState extends State<Walletcard> {
                           backgroundColor: WidgetStatePropertyAll(
                               const Color.fromARGB(255, 12, 116, 201))),
                       onPressed: () {
-                        Navigator.pushNamed(context, 'AddPage');
+                        Navigator.pushNamed(context, 'AddPage').then((value) {
+                          giveAmount();
+                        });
                       },
                       child: Icon(
                         Icons.add,
