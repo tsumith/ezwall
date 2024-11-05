@@ -80,4 +80,22 @@ class DbHelper {
     int spendSum = result[0]['total_amount'].toInt() ?? 0;
     return depositSum - spendSum;
   }
+
+  Future<int> getTotalDeposit() async {
+    final mydb = await getDb();
+    List<Map<String, dynamic>> result = await mydb.rawQuery(
+        'select coalesce(sum($clmAmount),0) as total_amount from $table_name where $clm_transaction = ?',
+        ["Deposit"]);
+    int depositSum = result[0]['total_amount'].toInt() ?? 0;
+    return depositSum;
+  }
+
+  Future<int> getTotalSpent() async {
+    final mydb = await getDb();
+    List<Map<String, dynamic>> result = await mydb.rawQuery(
+        'select coalesce(sum($clmAmount),0) as total_amount from $table_name where $clm_transaction =?',
+        ["Spend"]);
+    int spendSum = result[0]['total_amount'].toInt() ?? 0;
+    return spendSum;
+  }
 }

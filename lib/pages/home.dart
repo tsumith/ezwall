@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Activity.dart';
 import 'package:zzzwall/pages/Nav/Profile.dart';

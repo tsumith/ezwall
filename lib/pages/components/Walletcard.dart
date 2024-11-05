@@ -5,8 +5,11 @@ import 'package:zzzwall/database/LocalDatabase.dart';
 
 // ignore: must_be_immutable
 class Walletcard extends StatefulWidget {
+  static final GlobalKey<_WalletcardState> walletcardKey =
+      GlobalKey<_WalletcardState>();
+
   double? screenWidth;
-  Walletcard({this.screenWidth});
+  Walletcard({Key? key, this.screenWidth}) : super(key: walletcardKey);
 
   @override
   State<Walletcard> createState() => _WalletcardState();

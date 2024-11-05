@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
+import 'package:zzzwall/pages/components/Walletcard.dart';
 
 class SendPage extends StatefulWidget {
   @override
@@ -81,6 +82,7 @@ class _SendPageState extends State<SendPage> {
                     transacn: "Spend");
                 if (check) {
                   setState(() {});
+                  Walletcard.walletcardKey.currentState?.giveAmount();
                   Navigator.pop(context, "popped");
                 }
               },

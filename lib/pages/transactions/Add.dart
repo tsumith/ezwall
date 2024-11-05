@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
+import 'package:zzzwall/pages/components/Walletcard.dart';
 
 class AddPage extends StatefulWidget {
   @override
@@ -80,6 +81,7 @@ class _AddPageState extends State<AddPage> {
                     transacn: "Deposit");
                 if (check) {
                   setState(() {});
+                  Walletcard.walletcardKey.currentState?.giveAmount();
                   Navigator.pop(context, 'Updated data');
                 }
               },
