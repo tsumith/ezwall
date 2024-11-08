@@ -37,13 +37,23 @@ class _RecentPageState extends State<RecentPage> {
                     return ListTile(
                       leading:
                           WhiteText(data: "${data[index][DbHelper.clmSNo]} "),
-                      title: Text(
-                        "₹ ${data[index][DbHelper.clmAmount]}",
-                        style: TextStyle(
-                            color: data[index][DbHelper.clm_transaction] ==
-                                    "Deposit"
-                                ? const Color.fromARGB(255, 91, 211, 95)
-                                : Colors.red),
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "₹ ${data[index][DbHelper.clmAmount]}",
+                            style: TextStyle(
+                                color: data[index][DbHelper.clm_transaction] ==
+                                        "Deposit"
+                                    ? const Color.fromARGB(255, 91, 211, 95)
+                                    : Colors.red),
+                          ),
+                          Text(
+                            "${data[index][DbHelper.clmDateTime]}",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 148, 160, 160)),
+                          )
+                        ],
                       ),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

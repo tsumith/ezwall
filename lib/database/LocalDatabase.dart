@@ -26,6 +26,7 @@ class DbHelper {
   static String clm_transaction = "trans";
   static String clmDescription = "desc";
   static String clmTotalAmount = "total";
+  static String clmDateTime = "datetime";
 
   Future<Database> createDb() async {
     Directory appDir =
@@ -35,7 +36,7 @@ class DbHelper {
     return await openDatabase(dbPath, version: 1,
         onCreate: (database, version) {
       database.execute(
-          "create table $table_name ($clmSNo integer primary key autoincrement,$clmAmount integer,$clmDescription text,$clm_transaction text,$clmTotalAmount integer)");
+          "create table $table_name ($clmSNo integer primary key autoincrement,$clmAmount integer,$clmDescription text,$clm_transaction text,$clmTotalAmount integer,$clmDateTime text)");
     });
   }
 
@@ -43,7 +44,8 @@ class DbHelper {
   Future<bool> addData(
       {required int amount,
       required String description,
-      required String transacn}) async {
+      required String transacn,
+      required String datime}) async {
     final mydb = await getDb(); //getting the current database
     int currentTotal = await gettotalAmount();
     int newTotal = currentTotal;
@@ -58,7 +60,8 @@ class DbHelper {
       clmAmount: amount,
       clmDescription: description,
       clm_transaction: transacn,
-      clmTotalAmount: newTotal
+      clmTotalAmount: newTotal,
+      clmDateTime: datime
     });
     return rowsEffected > 0; //checking if data is inserted or not
   }
@@ -97,5 +100,14 @@ class DbHelper {
         ["Spend"]);
     int spendSum = result[0]['total_amount'].toInt() ?? 0;
     return spendSum;
+  }
+
+  Future<List<String>> getDateTime() async {
+    final mydb = await getDb();
+    List<Map<String, dynamic>> result =
+        await mydb.rawQuery('select $clmDateTime from $table_name');
+    return List.generate(result.length, (index) {
+      return result[index][clmDateTime];
+    });
   }
 }

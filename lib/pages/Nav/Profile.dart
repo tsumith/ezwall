@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
 import 'package:zzzwall/pages/components/GreyBlackBackground.dart';
 
@@ -8,16 +9,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Color myCol = const Color.fromARGB(255, 20, 54, 116);
-  Color _changeColor(Color col) {
-    var myCol = col;
-
-    if (myCol == Color.fromARGB(255, 20, 54, 116)) {
-      myCol = Colors.blue;
-    } else {
-      myCol = Color.fromARGB(255, 20, 54, 116);
-    }
-    return myCol;
+  String currentTime = '';
+  void _updateTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat('dd-MM-yyyy hh:mm');
+    currentTime = formatter.format(now);
+    setState(() {});
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Current datetime"),
+            content: Text("$currentTime"),
+          );
+        });
   }
 
   @override
@@ -31,27 +36,9 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 20,
             ),
-            GestureDetector(
-              onTap: () {
-                var col = _changeColor(myCol);
-                myCol = col;
-                setState(() {});
-              },
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15),
-                child: Center(
-                  child: WhiteText(data: "settings"),
-                ),
-                height: 60,
-                width: 200,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      myCol,
-                      const Color.fromARGB(255, 27, 62, 109),
-                      myCol
-                    ]),
-                    borderRadius: BorderRadius.circular(30)),
-              ),
+            TextButton(
+              onPressed: _updateTime,
+              child: Text("data"),
             )
           ],
         )

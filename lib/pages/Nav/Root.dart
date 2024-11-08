@@ -131,14 +131,25 @@ class _RootPageState extends State<RootPage> {
                                   leading: Text(
                                     "${data[index][DbHelper.clmSNo]}",
                                   ),
-                                  title: Text(
-                                    "₹ ${data[index][DbHelper.clmAmount]}",
-                                    style: TextStyle(
-                                        color: data[index][
-                                                    DbHelper.clm_transaction] ==
-                                                "Deposit"
-                                            ? Color.fromARGB(255, 9, 184, 15)
-                                            : Colors.red),
+                                  title: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "₹ ${data[index][DbHelper.clmAmount]}",
+                                        style: TextStyle(
+                                            color: data[index][DbHelper
+                                                        .clm_transaction] ==
+                                                    "Deposit"
+                                                ? Color.fromARGB(
+                                                    255, 9, 184, 15)
+                                                : Colors.red),
+                                      ),
+                                      Text(
+                                        "${data[index][DbHelper.clmDateTime]}",
+                                        style: TextStyle(color: Colors.grey),
+                                      )
+                                    ],
                                   ),
                                   subtitle: Row(
                                     mainAxisAlignment:

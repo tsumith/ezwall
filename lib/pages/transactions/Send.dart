@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Root.dart';
 import 'package:zzzwall/pages/components/Walletcard.dart';
@@ -9,6 +10,7 @@ class SendPage extends StatefulWidget {
 }
 
 class _SendPageState extends State<SendPage> {
+  var currentTime = "";
   DbHelper? db;
   int amount = 0;
   TextEditingController _sendController = TextEditingController();
@@ -17,6 +19,13 @@ class _SendPageState extends State<SendPage> {
   void initState() {
     super.initState();
     db = DbHelper.getInstance;
+    _updateTime();
+  }
+
+  void _updateTime() {
+    var now = DateTime.now();
+    var formatter = DateFormat("dd-MM-yyyy hh:mm");
+    currentTime = formatter.format(now);
   }
 
   @override
@@ -76,10 +85,12 @@ class _SendPageState extends State<SendPage> {
             ),
             ElevatedButton(
               onPressed: () async {
+                _updateTime();
                 bool check = await db!.addData(
                     amount: int.parse(_sendController.text),
                     description: _desController.text,
-                    transacn: "Spend");
+                    transacn: "Spend",
+                    datime: currentTime);
                 if (check) {
                   setState(() {});
                   Walletcard.walletcardKey.currentState?.giveAmount();

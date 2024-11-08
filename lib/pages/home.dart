@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
@@ -94,7 +95,8 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: pages[_currentIndex],
-      //drawer
+      //drawer,
+      drawerScrimColor: const Color.fromARGB(255, 199, 199, 199),
       drawer: Homedrawer(),
     );
   }

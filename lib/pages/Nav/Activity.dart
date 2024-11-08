@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:zzzwall/database/LocalDatabase.dart';
-import 'package:zzzwall/pages/Nav/Root.dart';
 import 'package:zzzwall/pages/components/GreyBlackBackground.dart';
 
 class ActivityPage extends StatefulWidget {
@@ -12,6 +12,10 @@ class ActivityPage extends StatefulWidget {
 class _ActivityPageState extends State<ActivityPage> {
   DbHelper? mydb;
   List<Map<String, dynamic>> data = [];
+  List<int> amounts = [];
+  List<String> _dates = [];
+  List<int> convertedDates = [];
+  double screenwidth = 100;
   @override
   void initState() {
     super.initState();
@@ -22,7 +26,22 @@ class _ActivityPageState extends State<ActivityPage> {
   double spent = 0;
   double deposit = 0;
   double totalAmount = 0;
+
   void update() async {
+    data = await mydb!.getData();
+    _dates = await mydb!.getDateTime();
+
+    for (int i = 0; i < _dates.length; i++) {
+      int amount = data[i][DbHelper.clmAmount];
+      amounts.add(amount);
+      String date = data[i][DbHelper.clmDateTime];
+      DateTime parsedData = DateFormat('dd-MM-yyyy').parse(date);
+      int milsec = parsedData.day;
+      convertedDates.add(milsec);
+    }
+    screenwidth = 120 * (_dates.length.toDouble());
+    setState(() {});
+
     int temp1;
     temp1 = await mydb!.getTotalSpent();
     spent = temp1.toDouble();
@@ -50,17 +69,35 @@ class _ActivityPageState extends State<ActivityPage> {
                 SizedBox(
                   height: 40,
                 ),
-                Container(
-                    color: Colors.white,
-                    width: 300,
-                    height: 300,
-                    child: LineChart(LineChartData(
-                      lineBarsData: [
-                        LineChartBarData(
-                            isCurved: true,
-                            spots: [FlSpot(1, 1), FlSpot(2, 3), FlSpot(5, 5)]),
-                      ],
-                    ))),
+                SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                        padding: EdgeInsets.all(20),
+                        color: Colors.white,
+                        height: 500,
+                        width: screenwidth,
+                        child: BarChart(BarChartData(
+                            titlesData: FlTitlesData(
+                                bottomTitles: AxisTitles(
+                                    sideTitles: SideTitles(
+                              showTitles: true,
+                              getTitlesWidget: (value, meta) {
+                                int index = value.toInt();
+                                if (index >= 0 &&
+                                    index < convertedDates.length) {
+                                  return Text(
+                                      '${_dates[index].substring(0, 10)}');
+                                } else {
+                                  return Text("no");
+                                }
+                              },
+                            ))),
+                            barGroups: List.generate(_dates.length, (index) {
+                              return BarChartGroupData(x: index, barRods: [
+                                BarChartRodData(
+                                    toY: amounts[index].toDouble(), width: 20)
+                              ]);
+                            }))))),
                 SizedBox(
                   height: 50,
                 ),
