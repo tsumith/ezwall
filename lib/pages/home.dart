@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:page_transition/page_transition.dart';
+
 import 'package:zzzwall/database/LocalDatabase.dart';
 import 'package:zzzwall/pages/Nav/Activity.dart';
 import 'package:zzzwall/pages/Nav/Profile.dart';
@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       bottomNavigationBar: GNav(
         duration: Duration(milliseconds: 370),
         gap: 8,
@@ -94,7 +95,17 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: pages[_currentIndex],
+      body: AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return SlideTransition(
+            position: Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
+                .animate(animation),
+            child: child,
+          );
+        },
+        child: pages[_currentIndex],
+      ),
       //drawer,
       drawerScrimColor: const Color.fromARGB(255, 199, 199, 199),
       drawer: Homedrawer(),
